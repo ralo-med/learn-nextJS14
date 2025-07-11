@@ -1,11 +1,13 @@
 import Link from "next/link";
+import Image from "next/image";
+import Movie from "../../components/movie";
+import styles from "../styles/home.module.css";
+import { API_URL } from "../lib/constants";
 
 export const metadata = {
   title: "Home",
   description: "Home",
 };
-
-export const API_URL = "https://nomad-movies.nomadcoders.workers.dev/movies";
 
 async function getMovies() {
   const response = await fetch(API_URL);
@@ -15,20 +17,15 @@ async function getMovies() {
 
 export default async function Home() {
   const movies = await getMovies();
-  interface Movie {
-    id: number;
-    title: string;
-    rating: number;
-  }
+
   return (
-    <div>
-      <h1>
+    <div className={styles.container}>
+      <h1 className={styles.title}>인기 영화</h1>
+      <div className={styles.movieGrid}>
         {movies.map((movie) => (
-          <div key={movie.id}>
-            <Link href={`/movies/${movie.id}`}>{movie.title}</Link>
-          </div>
+          <Movie key={movie.id} movie={movie} />
         ))}
-      </h1>
+      </div>
     </div>
   );
 }

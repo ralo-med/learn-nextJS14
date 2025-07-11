@@ -2,31 +2,30 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import styles from "../app/styles/navigation.module.css";
 
 export default function Navigation() {
   const pathname = usePathname();
-  const [count, setCount] = useState(0);
+
   return (
-    <nav>
-      <ul>
-        <li>
-          <Link href="/">Home</Link>
-          {pathname === "/" ? "✅" : ""}
-        </li>
-        <li>
-          <Link href="/about-us">About Us</Link>
-          {pathname === "/about-us" ? "✅" : ""}
-        </li>
-        <li>
-          <Link href="/movies/1">Movies</Link>
-          {pathname.startsWith("/movies") ? "✅" : ""}
-        </li>
-        <li>
-          <button onClick={() => setCount(count + 1)}>Count</button>
-          <p>Count: {count}</p>
-        </li>
-      </ul>
+    <nav className={styles.nav}>
+      <div className={styles.navContainer}>
+        <Link href="/" className={styles.logo}>
+          NETFLIX
+        </Link>
+
+        <div className={styles.navLinks}>
+          <Link href="/" className={pathname === "/" ? styles.active : ""}>
+            Home
+          </Link>
+          <Link
+            href="/about-us"
+            className={pathname === "/about-us" ? styles.active : ""}
+          >
+            About Us
+          </Link>
+        </div>
+      </div>
     </nav>
   );
 }
