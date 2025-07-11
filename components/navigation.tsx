@@ -19,6 +19,10 @@ export default function Navigation() {
           {pathname === "/about-us" ? "✅" : ""}
         </li>
         <li>
+          <Link href="/movies/1">Movies</Link>
+          {pathname.startsWith("/movies") ? "✅" : ""}
+        </li>
+        <li>
           <button onClick={() => setCount(count + 1)}>Count</button>
           <p>Count: {count}</p>
         </li>
