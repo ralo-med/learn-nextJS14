@@ -1,45 +1,26 @@
-"use client";
+export const metadata = {
+  title: "Home",
+  description: "Home",
+};
 
-import Link from "next/link";
-import { useState, useEffect } from "react";
+const API_URL = "https://nomad-movies.nomadcoders.workers.dev/movies";
 
-export default function Home() {
+async function getMovies() {
+  const response = await fetch(API_URL);
+  const json = await response.json();
+  return json;
+}
+
+export default async function Home() {
+  const movies = await getMovies();
   interface Movie {
     id: number;
     title: string;
     rating: number;
   }
-  const [loading, setLoading] = useState(true);
-  const [movies, setMovies] = useState<Movie[]>([]);
-  const getMovies = async () => {
-    const response = await fetch(
-      "https://nomad-movies.nomadcoders.workers.dev/movies"
-    );
-    const json = await response.json();
-    setMovies(json);
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    getMovies();
-  }, []);
   return (
     <div>
-      <h1>Hello Next.js</h1>
-      <div>
-        <h2>Movies</h2>
-        <ul>
-          {loading ? (
-            <p>Loading...</p>
-          ) : (
-            movies.map((movie) => (
-              <li key={movie.id}>
-                <Link href={`/movies/${movie.id}`}>{movie.title}</Link>
-              </li>
-            ))
-          )}
-        </ul>
-      </div>
+      <h1>{JSON.stringify(movies)}</h1>
     </div>
   );
 }
